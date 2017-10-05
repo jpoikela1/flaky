@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: flaky
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: flaky
+    spec:
+      containers:
+        - name: flaky
+          image: ${REGISTRY}/{IMAGE}:${TAG}
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "256M"
+            requests:
+              memory: "128M"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            periodSeconds: 5
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            periodSeconds: 5
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+
