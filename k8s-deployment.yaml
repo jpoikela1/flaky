@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: flaky
-          image: ${REGISTRY}/{IMAGE}:${TAG}
+          image: ${REGISTRY}/${IMAGE}:${TAG}
           ports:
             - containerPort: 5000
           resources:
