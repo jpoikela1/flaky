@@ -20,5 +20,5 @@ RUN pip install -r requirements.txt
 
 USER $app_user
 
-CMD [ "./app.py" ]
+CMD ["./app.py"]
 

@@ -1,9 +1,0 @@
----
-resources:
-  - name: flaky-test-cluster 
-    type: container.v1.cluster
-    properties:
-      cluster:
-        name: flaky-test-cluster
-        initial_node_count: 3
-      zone: europe-west3-a
