@@ -1,8 +1,28 @@
 ---
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: dmz
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: flaky
+  namespace: dmz
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: flaky
+              servicePort: 80
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: flaky
+  namespace: dmz
 spec:
   ports:
     - name: http
@@ -16,6 +36,7 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: flaky
+  namespace: dmz
 spec:
   replicas: 1
   selector:
@@ -53,16 +74,3 @@ spec:
           env:
             - name: MY_ENV
               value: 12factor
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: flaky
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /*
-            backend:
-              serviceName: flaky
-              servicePort: 80
