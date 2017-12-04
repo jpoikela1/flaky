@@ -1,23 +1,16 @@
-FROM debian:stretch-slim
+FROM python:3-slim-stretch
 
 LABEL maintainer="https://github.com/jpalomaki"
 
-ENV app flaky
-ENV app_dir /flaky
-ENV app_user daemon
+WORKDIR /usr/src/app
 
 EXPOSE 5000
 
-RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev
+COPY requirements.txt ./
+COPY app.py ./
 
-COPY requirements.txt $app_dir/requirements.txt
-COPY app.py $app_dir
+RUN pip install --no-cache-dir -r requirements.txt
 
-WORKDIR $app_dir
+USER daemon
 
-RUN pip install -r requirements.txt
-
-USER $app_user
-
-CMD ["./app.py"]
+CMD ["python", "app.py"]
