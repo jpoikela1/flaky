@@ -1,6 +1,6 @@
-FROM ubuntu:16.04
+FROM debian:stretch-slim
 
-LABEL maintainer="jpalomaki"
+LABEL maintainer="https://github.com/jpalomaki"
 
 ENV app flaky
 ENV app_dir /flaky
@@ -21,4 +21,3 @@ RUN pip install -r requirements.txt
 USER $app_user
 
 CMD ["./app.py"]
-

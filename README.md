@@ -1,1 +1,1 @@
-# Dockerized flask app for testing container builds
+# Test Flask app
