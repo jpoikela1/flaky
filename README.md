@@ -1,1 +1,1 @@
-# Test Flask app
+# Test Flask app for k8s

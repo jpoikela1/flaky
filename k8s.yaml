@@ -1,10 +1,26 @@
 ---
-apiVersion: apps/v1beta1
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaky
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
+  selector:
+    app: flaky
+  type: NodePort
+---
+apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: flaky
 spec:
-  replicas: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flaky
   template:
     metadata:
       labels:
@@ -34,19 +50,9 @@ spec:
             periodSeconds: 5
             initialDelaySeconds: 5
             timeoutSeconds: 3
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: flaky
-spec:
-  ports:
-    - name: http
-      port: 80
-      targetPort: 5000
-  selector:
-    app: flaky
-  type: NodePort
+          env:
+            - name: MY_ENV
+              value: 12factor
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
